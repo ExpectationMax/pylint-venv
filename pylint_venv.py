@@ -7,6 +7,7 @@ Activation logic taken from https://github.com/pypa/virtualenv
 import os
 import site
 import sys
+from glob import glob
 
 
 def is_venv():
@@ -43,8 +44,15 @@ def activate_venv(active_site, venv=None):
         if sys.platform == "win32":
             site_packages = os.path.join(base, "Lib", "site-packages")
         else:
+            python_lib = glob(
+                os.path.join(
+                    base,
+                    "lib",
+                    "python"+sys.version[0]+"*"
+                )
+            )[0]
             site_packages = os.path.join(
-                base, "lib", "python%s" % sys.version[:3], "site-packages"
+                python_lib, "site-packages"
             )
 
         prev = set(sys.path)
