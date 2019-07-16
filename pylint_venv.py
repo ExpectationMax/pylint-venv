@@ -65,7 +65,7 @@ def activate_venv(active_site, venv=None):
         sys.path[:] = [i for i in new if i not in prev] + [i for i in new if i in prev]
 
 
-def inithook(venv=None):
+def inithook(ignore_active_venv=False, venv=None):
     """Activate a Virtual Environment if one is not active."""
-    if not is_venv():
+    if not is_venv() or ignore_active_venv:
         activate_venv(site, venv)
